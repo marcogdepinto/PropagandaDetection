@@ -1,3 +1,4 @@
-# User-specific stuff (Idea)
+# User-specific stuff
 .idea/
 .__pycache__/
+.DS_Store
