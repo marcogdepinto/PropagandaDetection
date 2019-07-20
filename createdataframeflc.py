@@ -2,10 +2,10 @@ import os
 import argparse
 import numpy as np
 import pandas as pd
-from createlabelsdataframe import CreateLabelsDataframe
+from createlabelsdataframeflc import CreateLabelsDataframeFLC
 
 
-class CreateDataFrame:
+class CreateDataFrameFLC:
 
     '''
     Task: FLC
@@ -40,7 +40,7 @@ class CreateDataFrame:
 
         print("Creating the labels dataframe..")
         # Creating the labels dataframe using the helper function
-        labels_df = CreateLabelsDataframe.load_labels(path_to_labels)
+        labels_df = CreateLabelsDataframeFLC.load_labels(path_to_labels)
 
         print("Creating a Pandas series with the words of the articles splitted with the related indexes..")
         # Creating the series to be used to match the indexes of the single words within the loop
@@ -102,7 +102,7 @@ class CreateDataFrame:
         # Create a pickle of the dataframe
         print('Saving dataframe..')
         df.to_pickle(savepath)
-        print('Completed')
+        print("completed")
 
         return df
 
@@ -113,4 +113,4 @@ if __name__ == '__main__':
     parser.add_argument("path_to_labels", help="Path to get the labels dataset")
     parser.add_argument("savepath", help="Path to save the pickle of the output dataframe")
     args = parser.parse_args()
-    load_articles = CreateDataFrame.load_sentences_with_labels(args.path, args.path_to_labels, args.savepath)
+    load_articles = CreateDataFrameFLC.load_sentences_with_labels(args.path, args.path_to_labels, args.savepath)

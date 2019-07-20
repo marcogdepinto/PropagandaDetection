@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 
-class CreateLabelsDataframe:
+class CreateLabelsDataframeFLC:
 
     def load_labels(path: str):
 
