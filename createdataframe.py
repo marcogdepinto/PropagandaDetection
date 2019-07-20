@@ -1,4 +1,5 @@
 import os
+import argparse
 import numpy as np
 import pandas as pd
 from createlabelsdataframe import CreateLabelsDataframe
@@ -31,7 +32,6 @@ class CreateDataFrame:
         This function will be used to create the Pandas dataframe.
         For the training, we will extract from the full corpus only the sentences marked in the labels.
         We will also pickle the dataframe to use it later.
-        :type: path: str
         :return: Pandas dataframe
         '''
 
@@ -102,12 +102,15 @@ class CreateDataFrame:
         # Create a pickle of the dataframe
         print('Saving dataframe..')
         df.to_pickle(savepath)
+        print('Completed')
 
         return df
 
 
 if __name__ == '__main__':
-    # TODO: argument parser
-    load_articles = CreateDataFrame.load_sentences_with_labels('./datasets/train-articles',
-                                                               './datasets/train-labels-FLC',
-                                                               './pickled/train_set.pkl')
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", help="Path to get the train dataset")
+    parser.add_argument("path_to_labels", help="Path to get the labels dataset")
+    parser.add_argument("savepath", help="Path to save the pickle of the output dataframe")
+    args = parser.parse_args()
+    load_articles = CreateDataFrame.load_sentences_with_labels(args.path, args.path_to_labels, args.savepath)
