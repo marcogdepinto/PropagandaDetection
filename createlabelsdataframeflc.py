@@ -8,10 +8,10 @@ class CreateLabelsDataframeFLC:
 
         '''
         This helper function will create a dataframe with the labels of the dataset.
-        It will be then called from the createdataframe.py.
+        It will be then called from the createdataframeflc.py.
 
         :type: path: str
-        :return: dataframe
+        :return: Pandas dataframe
         '''
 
         data = []
@@ -29,4 +29,4 @@ class CreateLabelsDataframeFLC:
         # print(df)  # Debug
         return df
 
-# load_articles = CreateLabelsDataframe.load_labels('./datasets/couplelabelsfordev') # Debug
+# load_labels = CreateLabelsDataframe.load_labels('./datasets/couplelabelsfordev') # Debug

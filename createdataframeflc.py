@@ -30,8 +30,10 @@ class CreateDataFrameFLC:
 
         '''
         This function will be used to create the Pandas dataframe.
-        For the training, we will extract from the full corpus only the sentences marked in the labels.
-        We will also pickle the dataframe to use it later.
+        For the training, we will extract from the full corpus
+        - the full sentences;
+        - the sentences marked with the index (start-end).
+        It will also pickle the dataframe to use it later.
         :return: Pandas dataframe
         '''
 
