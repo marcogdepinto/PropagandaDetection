@@ -49,7 +49,29 @@ class CreateDataframeSLC:
                     for line in f.readlines():
                         # this is how you would loop through each letter
                         line = line.strip().split('\t')
-                        print(line)
+                        lst.append([line, article_id])
+
+        # print(lst)
+        str_list = [x for x in lst if x[0] != ['']] # Removing the empty lists from the dataset
+        # print(str_list)
+
+        # Merging the labels dataframe with the sentences created in the previous loop
+        sentences = pd.DataFrame(str_list, columns=['sentence', 'article_id'])
+        # print(sentences)
+
+        for index, tok in labels_df.iterrows():
+            # Get word data
+            id = tok['article_id']
+            line = tok['line']
+            is_propaganda = tok['is_propaganda']
+
+            newlst.append([id, line, is_propaganda])
+            # print(newlst)
+
+        # TODO: Add the sentence to the following dataframe
+        df = pd.DataFrame(newlst, columns=['article_id', 'line', 'is_propaganda'])
+        print(df)
+
 
 
 if __name__ == '__main__':
