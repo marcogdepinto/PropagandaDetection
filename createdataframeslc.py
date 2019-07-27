@@ -82,7 +82,7 @@ class CreateDataframeSLC:
         final_df.to_pickle(savepath)
         print("Completed")
 
-        #return final_df
+        return final_df
 
 
 if __name__ == '__main__':
