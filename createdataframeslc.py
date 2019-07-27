@@ -59,7 +59,6 @@ class CreateDataframeSLC:
 
         # Merging the labels dataframe with the sentences created in the previous loop
         sentences = pd.DataFrame(str_list, columns=['sentence', 'article_id', 'line'])
-        # sentences['line'] = pd.to_numeric(sentences['line'])
         # print(sentences)
 
         for index, tok in labels_df.iterrows():
@@ -72,7 +71,7 @@ class CreateDataframeSLC:
             # print(newlst)
 
         df = pd.DataFrame(newlst, columns=['article_id', 'line', 'is_propaganda'])
-        df['line'] = pd.to_numeric(df['line'])  # Line to numeric for the join below
+        df['line'] = pd.to_numeric(df['line'])  # Line to numeric for the merge below
         # print(df)
 
         final_df = df.merge(sentences, on=['line', 'article_id'], how='left')
