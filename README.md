@@ -93,4 +93,7 @@ The template files in folder dev-template-output-SLC have the same format where
 label is replaced with ?. These files might be used to perform a submission by 
 replacing ? with {propaganda/non-propaganda}.
 
+Notes about the pipeline
+--------------------------------------------
+1) Task SLC: empty lines are classified as "Non-Propaganda". Those lines are saved in the dataframe as NaN (not a number). Example: article 761874505, line 2.
 
