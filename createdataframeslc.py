@@ -1,6 +1,5 @@
 import os
 import argparse
-import numpy as np
 import pandas as pd
 from createlabelsdataframeslc import CreateLabelsDataframeSLC
 
@@ -32,6 +31,7 @@ class CreateDataframeSLC:
 
         lst = []
         newlst = []
+        idx = 1  # Index will be used to count the lines on each article
 
         print("Creating the labels dataframe..")
         # Creating the labels dataframe using the helper function
@@ -49,14 +49,17 @@ class CreateDataframeSLC:
                     for line in f.readlines():
                         # this is how you would loop through each letter
                         line = line.strip().split('\t')
-                        lst.append([line, article_id])
+                        lst.append([line, article_id, idx])
+                        idx += 1
+                    idx = 1 # Index back to one for new line on new article
 
         # print(lst)
         str_list = [x for x in lst if x[0] != ['']] # Removing the empty lists from the dataset
         # print(str_list)
 
         # Merging the labels dataframe with the sentences created in the previous loop
-        sentences = pd.DataFrame(str_list, columns=['sentence', 'article_id'])
+        sentences = pd.DataFrame(str_list, columns=['sentence', 'article_id', 'line'])
+        # sentences['line'] = pd.to_numeric(sentences['line'])
         # print(sentences)
 
         for index, tok in labels_df.iterrows():
@@ -68,10 +71,20 @@ class CreateDataframeSLC:
             newlst.append([id, line, is_propaganda])
             # print(newlst)
 
-        # TODO: Add the sentence to the following dataframe
         df = pd.DataFrame(newlst, columns=['article_id', 'line', 'is_propaganda'])
-        print(df)
+        df['line'] = pd.to_numeric(df['line'])  # Line to numeric for the join below
+        # print(df)
 
+        # TODO: using index+1 of sentences dataframe created looping through articles as key, join/merge it with df
+        final_df = df.merge(sentences, on=['line', 'article_id'], how='left')
+        # print(final_df)
+
+        # Create a pickle of the dataframe
+        print('Saving dataframe..')
+        final_df.to_pickle(savepath)
+        print("Completed")
+
+        #return final_df
 
 
 if __name__ == '__main__':
