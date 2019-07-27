@@ -75,7 +75,6 @@ class CreateDataframeSLC:
         df['line'] = pd.to_numeric(df['line'])  # Line to numeric for the join below
         # print(df)
 
-        # TODO: using index+1 of sentences dataframe created looping through articles as key, join/merge it with df
         final_df = df.merge(sentences, on=['line', 'article_id'], how='left')
         # print(final_df)
 
