@@ -1,3 +1,7 @@
+"""
+This file creates the dataframe for the SLC task.
+"""
+
 import os
 import argparse
 import pandas as pd
@@ -5,7 +9,6 @@ from createlabelsdataframeslc import CreateLabelsDataframeSLC
 
 
 class CreateDataframeSLC:
-
     '''
     Task SLC
     The format of a tab-separated line of the gold label and the submission files for task SLC is:
@@ -14,10 +17,10 @@ class CreateDataframeSLC:
     (the first sentence has id 1) and label={propaganda/non-propaganda}.
     Gold and submission files must have the same number of rows as the number of sentences,
     i.e. of lines, in the article. In order to help participants preparing a submission, we provide
-    template prediction files, which have the same format of the gold files where label is replaced with ?.
-    Sentences are splitted using dots.
+    template prediction files, which have the same format of the gold files where label
+    is replaced with ?. Sentences are splitted using dots.
     '''
-
+    @staticmethod
     def load_sentences_with_labels(path: str, path_to_labels: str, savepath: str):
 
         '''
@@ -44,9 +47,9 @@ class CreateDataframeSLC:
             for file in files:
                 filepath = dirs + '/' + file
                 article_id = str(file[:-4][7:])
-                with open(filepath, 'r') as f:
+                with open(filepath, 'r') as single_file:
                     # loop through all lines using f.readlines() method
-                    for line in f.readlines():
+                    for line in single_file.readlines():
                         # this is how you would loop through each letter
                         line = line.strip().split('\t')
                         lst.append([line, article_id, idx])
@@ -63,18 +66,18 @@ class CreateDataframeSLC:
 
         for index, tok in labels_df.iterrows():
             # Get word data
-            id = tok['article_id']
+            identifier = tok['article_id']
             line = tok['line']
             is_propaganda = tok['is_propaganda']
 
-            newlst.append([id, line, is_propaganda])
+            newlst.append([identifier, line, is_propaganda])
             # print(newlst)
 
-        df = pd.DataFrame(newlst, columns=['article_id', 'line', 'is_propaganda'])
-        df['line'] = pd.to_numeric(df['line'])  # Line to numeric for the merge below
+        dataframe = pd.DataFrame(newlst, columns=['article_id', 'line', 'is_propaganda'])
+        dataframe['line'] = pd.to_numeric(dataframe['line'])  # Line to numeric for the merge below
         # print(df)
 
-        final_df = df.merge(sentences, on=['line', 'article_id'], how='left')
+        final_df = dataframe.merge(sentences, on=['line', 'article_id'], how='left')
         # print(final_df)
 
         # Create a pickle of the dataframe
@@ -86,10 +89,11 @@ class CreateDataframeSLC:
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("path", help="Path to get the train dataset")
-    parser.add_argument("path_to_labels", help="Path to get the labels dataset")
-    parser.add_argument("savepath", help="Path to save the pickle of the output dataframe")
-    args = parser.parse_args()
-    load_articles = CreateDataframeSLC.load_sentences_with_labels(args.path, args.path_to_labels, args.savepath)
-
+    PARSER = argparse.ArgumentParser()
+    PARSER.add_argument("path", help="Path to get the train dataset")
+    PARSER.add_argument("path_to_labels", help="Path to get the labels dataset")
+    PARSER.add_argument("savepath", help="Path to save the pickle of the output dataframe")
+    ARGS = PARSER.parse_args()
+    LOAD_ARTICLES = CreateDataframeSLC.load_sentences_with_labels(ARGS.path,
+                                                                  ARGS.path_to_labels,
+                                                                  ARGS.savepath)
