@@ -1,4 +1,8 @@
+# Pipeline for 2019 Workshop on NLP4IF: censorship, disinformation, and propaganda
+**Second Workshop on NLP for Internet Freedom (Tentative: November 3, 2019)**
+**Co-located with EMNLP-IJCNLP November 3-7 2019, Hong Kong**
 
+*http://www.netcopia.net/nlp4if/*
 
 Contents
 
